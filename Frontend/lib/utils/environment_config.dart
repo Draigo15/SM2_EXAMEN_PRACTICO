@@ -12,7 +12,7 @@ class EnvironmentConfig {
   // =========================
   // URLs base por defecto (ambas ramas)
   // =========================
-  static const String _tunnelApiUrl   = 'https://d1151c2af665.ngrok-free.app'; // <<<< ACTUALIZAR CON TU URL DE NGROK
+  static const String _tunnelApiUrl   = 'https://dry-pianos-make.loca.lt'; // <<<< ACTUALIZAR CON TU URL DE NGROK
   static const String _localApiUrl    = 'http://10.0.2.2:3000';               // <<<< Para emulador Android
 
   // Elige por defecto según el flag _useTunnel (se puede sobreescribir con API_BASE_URL)
