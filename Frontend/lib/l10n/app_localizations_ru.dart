@@ -777,4 +777,13 @@ class AppLocalizationsRu extends AppLocalizations {
 
   @override
   String get advanced => 'Advanced';
+
+  @override
+  String get loginHistory => 'История входов';
+
+  @override
+  String get noLoginEvents => 'События входа не найдены';
+
+  @override
+  String get loadMore => 'Загрузить еще';
 }

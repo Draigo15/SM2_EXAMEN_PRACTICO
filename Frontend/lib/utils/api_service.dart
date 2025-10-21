@@ -336,6 +336,13 @@ class ApiService {
     final endpoint = '${EnvironmentConfig.fullApiUrl}/approval/rules';
     return await get(endpoint, token: token);
   }
+
+  // --- Auth API Methods ---
+  /// Get paginated login history for the authenticated user
+  Future<ApiResponse> getLoginHistory({String? token, int page = 1, int limit = 10}) async {
+    final endpoint = '${EnvironmentConfig.fullApiUrl}/auth/login-history?page=$page&limit=$limit';
+    return await get(endpoint, token: token);
+  }
 }
 
 // API Response wrapper class

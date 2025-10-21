@@ -25,6 +25,7 @@ import { ApprovalRule } from '../../domain/entities/approval-rule.entity';
 import { ApprovalEvaluation } from '../../domain/entities/approval-evaluation.entity';
 import { ApprovalMetrics } from '../../domain/entities/approval-metrics.entity';
 import * as dotenv from 'dotenv';
+import { LoginEvent } from '../../domain/entities/login-event.entity';
 
 // Load environment variables
 dotenv.config();
@@ -44,6 +45,7 @@ export const AppDataSource = new DataSource({
     Person,
     User,
     RefreshToken,
+    LoginEvent,
     UserProgress,
     DailyLives,
 

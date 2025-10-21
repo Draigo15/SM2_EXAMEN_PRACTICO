@@ -1,0 +1,40 @@
+import {
+  Entity,
+  PrimaryGeneratedColumn,
+  Column,
+  CreateDateColumn,
+  Index,
+  ManyToOne,
+  JoinColumn,
+} from 'typeorm';
+import { User } from './user.entity';
+
+@Entity('login_events')
+@Index(['userId'])
+@Index(['createdAt'])
+export class LoginEvent {
+  @PrimaryGeneratedColumn('uuid')
+  readonly id!: string;
+
+  @Column({ type: 'uuid', name: 'user_id' })
+  userId!: string;
+
+  @Column({ type: 'varchar', length: 255, nullable: true, name: 'device_info' })
+  deviceInfo!: string | null;
+
+  @Column({ type: 'varchar', length: 128, nullable: true, name: 'ip_hash' })
+  ipHash!: string | null;
+
+  @Column({ type: 'varchar', length: 255, nullable: true, name: 'user_agent' })
+  userAgent!: string | null;
+
+  @Column({ type: 'boolean', default: true })
+  success!: boolean;
+
+  @ManyToOne(() => User, { onDelete: 'CASCADE' })
+  @JoinColumn({ name: 'user_id' })
+  user!: User;
+
+  @CreateDateColumn({ type: 'timestamptz', name: 'created_at' })
+  readonly createdAt!: Date;
+}

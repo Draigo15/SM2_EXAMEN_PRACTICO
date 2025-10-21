@@ -8,6 +8,8 @@ import { IJwtService } from '../../interfaces/services/jwt-service.interface';
 import { IHashService } from '../../interfaces/services/hash-service.interface';
 import { RefreshToken } from '../../../domain/entities/refresh-token.entity';
 import { ValidationException } from '../../../domain/errors/domain.errors';
+import { LoginEvent } from '../../../domain/entities/login-event.entity';
+import { ILoginEventRepository } from '../../interfaces/repositories/login-event-repository.interface';
 
 @Injectable()
 export class LoginUserUseCase {
@@ -22,6 +24,8 @@ export class LoginUserUseCase {
     private readonly jwtService: IJwtService,
     @Inject('IHashService')
     private readonly hashService: IHashService,
+    @Inject('ILoginEventRepository')
+    private readonly loginEventRepository: ILoginEventRepository,
   ) {}
 
   async execute(
@@ -73,6 +77,15 @@ export class LoginUserUseCase {
       await this.userRepository.update(user.id, {
         lastLoginAt: new Date(),
       });
+
+      // Record login event
+      const event = new LoginEvent();
+      event.userId = user.id;
+      event.deviceInfo = deviceInfo || null;
+      event.userAgent = userAgent || null;
+      event.ipHash = ipAddress ? await this.hashService.hash(ipAddress) : null;
+      event.success = true;
+      await this.loginEventRepository.save(event);
 
       this.logger.log(`User logged in successfully: ${user.id}`);
 

@@ -27,10 +27,12 @@ import { BaseAuthController } from './base-auth.controller';
 // Use Cases
 import { GetActiveSessionsUseCase } from '../../../application/use-cases/auth/get-active-sessions.use-case';
 import { LogoutUserUseCase } from '../../../application/use-cases/auth/logout-user.use-case';
+import { GetLoginHistoryUseCase } from '../../../application/use-cases/auth/get-login-history.use-case';
 
 // DTOs
 import { ActiveSessionsResponseDto } from '../../../application/dtos/auth/active-session.dto';
 import { SessionRevocationResponseDto } from '../../../application/dtos/auth/session-revocation-response.dto';
+import { LoginHistoryResponseDto } from '../../../application/dtos/auth/login-history-response.dto';
 
 @ApiTags('Authentication - Session Management')
 @Controller('auth')
@@ -38,11 +40,57 @@ export class SessionManagementController extends BaseAuthController {
   constructor(
     private readonly getActiveSessionsUseCase: GetActiveSessionsUseCase,
     private readonly logoutUserUseCase: LogoutUserUseCase,
+    private readonly getLoginHistoryUseCase: GetLoginHistoryUseCase,
   ) {
     super();
   }
 
   // =================== SESSION MANAGEMENT ===================
+
+  @Get('login-history')
+  @HttpCode(HttpStatus.OK)
+  @SkipCSRF()
+  @UseRateLimit(RATE_LIMITS.GENERAL)
+  @ApiBearerAuth()
+  @ApiOperation({
+    summary: 'Get login history for the authenticated user',
+    description: 'Returns paginated login events for the current user.',
+  })
+  @ApiQuery({ name: 'page', required: false, description: 'Page number (default 1)' })
+  @ApiQuery({ name: 'limit', required: false, description: 'Items per page (default 10)' })
+  @ApiResponse({ status: 200, description: 'Login history retrieved', type: LoginHistoryResponseDto })
+  @ApiResponse({ status: 401, description: 'Not authenticated - valid JWT required' })
+  @ApiResponse({ status: 429, description: 'Too many requests' })
+  async getLoginHistory(
+    @Req() request: Request,
+    @Query('page') page?: string,
+    @Query('limit') limit?: string,
+  ): Promise<LoginHistoryResponseDto> {
+    try {
+      const userId =
+        (request as { user?: { userId?: string; sub?: string } }).user?.userId ||
+        (request as { user?: { userId?: string; sub?: string } }).user?.sub;
+
+      if (!userId) {
+        this.logger.warn('Login history request without valid user context');
+        throw new BadRequestException('Invalid user context');
+      }
+
+      const pageNum = page ? parseInt(page, 10) : 1;
+      const limitNum = limit ? parseInt(limit, 10) : 10;
+
+      this.logger.debug(`Getting login history for user: ${userId}, page ${pageNum}, limit ${limitNum}`);
+
+      const result = await this.getLoginHistoryUseCase.execute({ userId, page: pageNum, limit: limitNum });
+      return result;
+    } catch (error: unknown) {
+      this.logger.error(
+        `Get login history failed: ${error instanceof Error ? error.message : String(error)}`,
+        error instanceof Error ? error.stack : undefined,
+      );
+      this.handleAuthError(error);
+    }
+  }
 
   @Get('sessions')
   @HttpCode(HttpStatus.OK)

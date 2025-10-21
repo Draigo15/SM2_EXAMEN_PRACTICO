@@ -1537,6 +1537,24 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'Advanced'**
   String get advanced;
+
+  /// No description provided for @loginHistory.
+  ///
+  /// In en, this message translates to:
+  /// **'Login History'**
+  String get loginHistory;
+
+  /// No description provided for @noLoginEvents.
+  ///
+  /// In en, this message translates to:
+  /// **'No login events found'**
+  String get noLoginEvents;
+
+  /// No description provided for @loadMore.
+  ///
+  /// In en, this message translates to:
+  /// **'Load more'**
+  String get loadMore;
 }
 
 class _AppLocalizationsDelegate

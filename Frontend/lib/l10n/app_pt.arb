@@ -129,4 +129,8 @@
       }
     }
   }
+,
+  "loginHistory": "Histórico de Login",
+  "noLoginEvents": "Nenhum evento de login encontrado",
+  "loadMore": "Carregar mais"
 }

@@ -417,5 +417,8 @@
   "coherence": "Coherence",
   "beginner": "Beginner",
   "intermediate": "Intermediate",
-  "advanced": "Advanced"
+  "advanced": "Advanced",
+  "loginHistory": "Login History",
+  "noLoginEvents": "No login events found",
+  "loadMore": "Load more"
 }

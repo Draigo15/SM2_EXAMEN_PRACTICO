@@ -11,6 +11,7 @@ import '../widgets/settings_switch.dart';
 import '../widgets/logout_button.dart';
 import '../widgets/color_picker_widget.dart';
 import 'login_screen.dart';
+import 'login_history_screen.dart';
 
 class SettingsScreen extends StatefulWidget {
   const SettingsScreen({super.key});
@@ -101,6 +102,21 @@ class _SettingsScreenState extends State<SettingsScreen> {
                   setState(() {
                     _notificationsEnabled = value;
                   });
+                },
+              ),
+
+              // Login History
+              SettingsOption(
+                title: AppLocalizations.of(context)!.loginHistory,
+                leading: const Icon(Icons.history),
+                trailing: const Icon(Icons.arrow_forward_ios, size: 16),
+                onTap: () {
+                  Navigator.push(
+                    context,
+                    MaterialPageRoute(
+                      builder: (_) => const LoginHistoryScreen(),
+                    ),
+                  );
                 },
               ),
             ],

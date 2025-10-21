@@ -44,6 +44,7 @@ const AppDataSource = new DataSource({
     Person,
     User,
     RefreshToken,
+    LoginEvent,
     UserProgress,
     DailyLives,
 

@@ -778,4 +778,13 @@ class AppLocalizationsPt extends AppLocalizations {
 
   @override
   String get advanced => 'Advanced';
+
+  @override
+  String get loginHistory => 'Histórico de Login';
+
+  @override
+  String get noLoginEvents => 'Nenhum evento de login encontrado';
+
+  @override
+  String get loadMore => 'Carregar mais';
 }

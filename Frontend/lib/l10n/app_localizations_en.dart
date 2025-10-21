@@ -774,4 +774,13 @@ class AppLocalizationsEn extends AppLocalizations {
 
   @override
   String get advanced => 'Advanced';
+
+  @override
+  String get loginHistory => 'Login History';
+
+  @override
+  String get noLoginEvents => 'No login events found';
+
+  @override
+  String get loadMore => 'Load more';
 }

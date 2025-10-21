@@ -3,6 +3,7 @@ import { TypeOrmModule } from '@nestjs/typeorm';
 import { User } from '../../domain/entities/user.entity';
 import { Person } from '../../domain/entities/person.entity';
 import { RefreshToken } from '../../domain/entities/refresh-token.entity';
+import { LoginEvent } from '../../domain/entities/login-event.entity';
 // Split controllers for better organization
 import { UserAuthController } from '../controllers/auth/user-auth.controller';
 import { EmailPasswordController } from '../controllers/auth/email-password.controller';
@@ -15,9 +16,11 @@ import { VerifyEmailUseCase } from '../../application/use-cases/auth/verify-emai
 import { ForgotPasswordUseCase } from '../../application/use-cases/auth/forgot-password.use-case';
 import { ResetPasswordUseCase } from '../../application/use-cases/auth/reset-password.use-case';
 import { GetActiveSessionsUseCase } from '../../application/use-cases/auth/get-active-sessions.use-case';
+import { GetLoginHistoryUseCase } from '../../application/use-cases/auth/get-login-history.use-case';
 import { UserRepository } from '../../infrastructure/repositories/user.repository';
 import { PersonRepository } from '../../infrastructure/repositories/person.repository';
 import { RefreshTokenRepository } from '../../infrastructure/repositories/refresh-token.repository';
+import { LoginEventRepository } from '../../infrastructure/repositories/login-event.repository';
 import { HashingService } from '../../shared/services/hashing.service';
 import { HashUtilityService } from '../../shared/services/hash-utility.service';
 import { TokenGenerationService } from '../../shared/services/token-generation.service';
@@ -29,7 +32,7 @@ import { TokenRevocationService } from '../../application/implementations/token-
 import { SessionManagementService } from '../../application/implementations/session-management.service';
 
 @Module({
-  imports: [TypeOrmModule.forFeature([User, Person, RefreshToken])],
+  imports: [TypeOrmModule.forFeature([User, Person, RefreshToken, LoginEvent])],
   controllers: [UserAuthController, EmailPasswordController, SessionManagementController],
   providers: [
     RegisterUserUseCase,
@@ -40,9 +43,11 @@ import { SessionManagementService } from '../../application/implementations/sess
     ForgotPasswordUseCase,
     ResetPasswordUseCase,
     GetActiveSessionsUseCase,
+    GetLoginHistoryUseCase,
     UserRepository,
     PersonRepository,
     RefreshTokenRepository,
+    LoginEventRepository,
     HashingService,
     HashUtilityService,
     TokenGenerationService,
@@ -63,6 +68,10 @@ import { SessionManagementService } from '../../application/implementations/sess
     {
       provide: 'IRefreshTokenRepository',
       useClass: RefreshTokenRepository,
+    },
+    {
+      provide: 'ILoginEventRepository',
+      useClass: LoginEventRepository,
     },
     {
       provide: 'IHashService',
@@ -94,6 +103,7 @@ import { SessionManagementService } from '../../application/implementations/sess
     ForgotPasswordUseCase,
     ResetPasswordUseCase,
     GetActiveSessionsUseCase,
+    GetLoginHistoryUseCase,
     'IUserRepository',
     'IPersonRepository',
     'IRefreshTokenRepository',

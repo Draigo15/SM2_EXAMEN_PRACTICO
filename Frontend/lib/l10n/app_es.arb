@@ -363,5 +363,8 @@
   "coherence": "Coherencia",
   "beginner": "Principiante",
   "intermediate": "Intermedio",
-  "advanced": "Avanzado"
+  "advanced": "Avanzado",
+  "loginHistory": "Historial de inicio de sesión",
+  "noLoginEvents": "No se encontraron eventos de inicio de sesión",
+  "loadMore": "Cargar más"
 }

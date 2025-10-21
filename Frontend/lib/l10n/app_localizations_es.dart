@@ -786,4 +786,13 @@ class AppLocalizationsEs extends AppLocalizations {
 
   @override
   String get advanced => 'Avanzado';
+
+  @override
+  String get loginHistory => 'Historial de inicio de sesión';
+
+  @override
+  String get noLoginEvents => 'No se encontraron eventos de inicio de sesión';
+
+  @override
+  String get loadMore => 'Cargar más';
 }

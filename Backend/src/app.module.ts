@@ -43,6 +43,7 @@ import { InterviewModule } from './application/modules/interview.module';
 import { CronModule } from './application/modules/cron.module';
 import { SecurityModule } from './shared/security.module';
 import { ThrottlerModule } from '@nestjs/throttler';
+import { LoginEvent } from './domain/entities/login-event.entity';
 
 @Module({
   imports: [
@@ -79,6 +80,7 @@ import { ThrottlerModule } from '@nestjs/throttler';
           Person,
           User,
           RefreshToken,
+          LoginEvent,
           UserProgress,
           DailyLives,
 
